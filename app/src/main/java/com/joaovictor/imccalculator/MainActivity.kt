@@ -42,12 +42,9 @@ class MainActivity : AppCompatActivity() {
             if(peso.isNotEmpty() && altura.isNotEmpty()){
                 intent.putExtra("peso", peso.toDouble())
                 intent.putExtra("altura", altura.toDouble())
+
+                startActivity(intent)
             }
-
-            startActivity(intent)
-
         }
-
-
     }
 }

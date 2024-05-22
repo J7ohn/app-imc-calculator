@@ -1,5 +1,6 @@
 package com.joaovictor.imccalculator
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +13,9 @@ class ResultadoActivity : AppCompatActivity() {
     private lateinit var textPeso: TextView
     private lateinit var textAtura: TextView
     private lateinit var textResultado: TextView
+    private lateinit var textImc: TextView
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,16 +29,19 @@ class ResultadoActivity : AppCompatActivity() {
         textPeso = findViewById(R.id.textPeso)
         textAtura = findViewById(R.id.textAltura)
         textResultado = findViewById(R.id.textResultado)
+        textImc = findViewById(R.id.textImc)
 
         val bundle = intent.extras
         if (bundle != null) {
             val peso = bundle.getDouble("peso")
             val altura = bundle.getDouble("altura")
 
-            textPeso.text = "Peso informado $peso kg"
-            textAtura.text = "altura informada $altura m"
+            textPeso.text = "Peso informado: $peso kg"
+            textAtura.text = "Altura informada: $altura m"
 
             val imc = peso / (altura * altura)
+
+            textImc.text = String.format("%.2f", imc)
 
             if (imc < 18.5) {
                 textResultado.text = "Baixo"
@@ -45,6 +51,8 @@ class ResultadoActivity : AppCompatActivity() {
                 textResultado.text = "Sobrepeso"
             } else if (imc in 30.0..39.9) {
                 textResultado.text = "Obesidade"
+            } else if (imc > 39.9) {
+                textResultado.text = "Obesidade Grave"
             }
 
         }
